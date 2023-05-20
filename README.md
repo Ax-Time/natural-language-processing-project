@@ -11,5 +11,8 @@ To load the datasets run:
 make load
 ```
 
-
+To run the cluster visualization tool, run:
+```
+python cluster_visualizer.py
+```
 
