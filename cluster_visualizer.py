@@ -71,4 +71,6 @@ canvas.draw()
 canvas.get_tk_widget().pack(side='top', fill='both', expand=1)
 
 # Start the GUI
+k=1
+update_plot(None)
 tk.mainloop()
