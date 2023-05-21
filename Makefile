@@ -1,8 +1,8 @@
 up:
 	# Create virtual environment and install dependencies
 	python -m venv .env
-	python -m pip install -r requirements.txt
 	source .env/bin/activate
+	python -m pip install -r requirements.txt
 
 load:
 	mkdir wizard_of_wikipedia
