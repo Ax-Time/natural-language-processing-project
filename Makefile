@@ -1,3 +1,5 @@
+SHELL := /bin/bash
+
 up:
 	# Create virtual environment and install dependencies
 	python -m venv .env
