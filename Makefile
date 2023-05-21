@@ -3,7 +3,7 @@ SHELL := /bin/bash
 up:
 	# Create virtual environment and install dependencies
 	python -m venv .env
-	source .env/bin/activate
+	. .env/bin/activate
 	python -m pip install -r requirements.txt
 
 load:
