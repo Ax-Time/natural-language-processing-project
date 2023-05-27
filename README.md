@@ -13,8 +13,9 @@ To load the datasets run:
 make load
 ```
 
-To run the cluster visualization tool, run:
+To run the cluster visualization tool, run
 ```
 python cluster_visualizer.py
 ```
+Run the cluster visualizer only after running the clustering notebook!!!
 
