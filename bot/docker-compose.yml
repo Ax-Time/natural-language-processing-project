@@ -1,0 +1,15 @@
+services:
+  backend:
+    build:
+        context: ./be
+        dockerfile: Dockerfile
+    image: chatbot-be
+    ports:
+      - "8000:8000"
+  frontend:
+    build:
+        context: ./fe
+        dockerfile: Dockerfile
+    image: chatbot-fe
+    ports:
+      - "8080:8080"

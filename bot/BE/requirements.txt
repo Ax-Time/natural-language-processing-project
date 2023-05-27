@@ -1,0 +1,8 @@
+click==8.0.3
+flask==2.2.3
+flask-cors==3.0.10
+torch==2.0.1
+transformers==4.29.1
+wikipedia-api==0.5.8
+sentencepiece==0.1.99
+accelerate==0.19.0
