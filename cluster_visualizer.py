@@ -1,19 +1,28 @@
 import pickle
 import numpy as np
+import json
 from nltk import Counter
 
 def load_data():
 # Load the embeddings
-    with open('dumps/sentence_clustering/embeddings.pkl', 'rb') as f:
+    with open('dumps/sentence_embeddings.pkl', 'rb') as f:
         embeddings = np.array(pickle.load(f)).mean(axis=1)
 
     # Load the clusters
-    with open('dumps/sentence_clustering/kmeans.pkl', 'rb') as f:
+    with open('dumps/kmeans_semb_400.pkl', 'rb') as f:
         kmeans = pickle.load(f)
 
     # Load the topics
-    with open('dumps/sentence_clustering/topics.pkl', 'rb') as f:
-        topics = np.array(pickle.load(f))
+    try:
+        with open('dumps/topics.pkl', 'rb') as f:
+            topics = np.array(pickle.load(f))
+    except:
+        with open('wizard_of_wikipedia/data.json') as f:
+            data = json.load(f)
+        topics = [sample['chosen_topic'] for sample in data]
+        topics = np.array(topics)
+        with open('dumps/topics.pkl', 'wb') as f:
+            pickle.dump(topics, f)
     return embeddings, kmeans, topics
 
 embeddings, kmeans, topics = load_data()
