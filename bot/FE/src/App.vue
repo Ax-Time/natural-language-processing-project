@@ -47,7 +47,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import $ from "jquery";
 import axios from "axios";
 
@@ -60,12 +60,12 @@ const handleMessageInput = async (e) => {
       type: "human",
       text: `Selected context: ${message.value}`,
       timestamp:
-        "Today  at" + new Date().getHours() + ":" + new Date().getMinutes(),
+        "Today at " + new Date().getHours() + ":" + new Date().getMinutes(),
     });
 
-    const response = await axios.post("http://127.0.0.1:8000/context", {
-      context: message.value,
-    });
+    // const response = await axios.post("http://127.0.0.1:8000/context", {
+    //   context: message.value,
+    // });
 
     context.value = message.value;
 
@@ -74,33 +74,37 @@ const handleMessageInput = async (e) => {
       500
     );
 
-    messages.value.push({
-      type: "bot",
-      text: response.data,
-      timestamp:
-        "Today at " + new Date().getHours() + ":" + new Date().getMinutes(),
-    });
+    message.value = "";
+
+    // messages.value.push({
+    //   type: "bot",
+    //   text: response.data,
+    //   timestamp:
+    //     "Today at " + new Date().getHours() + ":" + new Date().getMinutes(),
+    // });
 
     $(".ChatWindow").animate(
       { scrollTop: $(".ChatWindow").prop("scrollHeight") },
       500
     );
   } else {
+    turn.value = turn.value + 1;
     // add message to messages array
     messages.value.push({
       type: "human",
       text: message.value,
       timestamp:
-        "Today  at" + new Date().getHours() + ":" + new Date().getMinutes(),
+        "Today at " + new Date().getHours() + ":" + new Date().getMinutes(),
     });
 
-    const response = await axios.post("http://127.0.0.1:8000/", {
-      question: message.value,
-      context: context.value,
-    });
-
+    const oldString = (" " + message.value).slice(1);
     message.value = "";
-
+    const response = await axios.post("http://127.0.0.1:8000/gpt-question", {
+      text: oldString,
+      context: context.value,
+      persona: "i am a random persona",
+      turn: turn.value,
+    });
     $(".ChatWindow").animate(
       { scrollTop: $(".ChatWindow").prop("scrollHeight") },
       500
@@ -120,6 +124,10 @@ const handleMessageInput = async (e) => {
   }
 };
 
+onMounted(() => {
+  return axios.post("http://127.0.0.1:8000/reset");
+});
+
 const messages = ref([
   {
     type: "bot",
@@ -129,6 +137,8 @@ const messages = ref([
   },
 ]);
 const context = ref("");
+
+const turn = ref(0);
 </script>
 
 <style lang="sass">
